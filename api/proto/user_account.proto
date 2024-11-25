@@ -1,0 +1,86 @@
+syntax = "proto3";
+package user_account;
+
+option go_package = "./userAccountpb";
+import "google/protobuf/timestamp.proto";
+
+service UserAccount {
+  rpc GetAccountInfo (GetAccountInfoRequest) returns (GetAccountInfoResponse);
+}
+
+message GetAccountInfoRequest {
+  string accountId = 1;
+}
+
+message GetAccountInfoResponse {
+  Account account = 1;
+  AccountInfo accountInfo = 2;
+  AccountAvatar avatar = 3;
+  string error = 4;
+  string errorCode = 5;
+}
+
+message Account {
+  string id = 1;
+  string username = 2;
+  uint32 accountRoleId = 3;
+  AccountCreatedByMethod createdBy = 5;
+  bool isBanned = 6;
+  bool isRestricted = 7;
+  bool isSelfDeleted = 8;
+  google.protobuf.Timestamp createdAt = 9;
+}
+
+message AccountInfo {
+  string id = 1;
+  string accountId = 2;
+  string avatarId = 3;
+  string firstName = 4;
+  string lastName = 5;
+  google.protobuf.Timestamp dateOfBirth = 6;
+  Gender gender = 7;
+  MaritalStatus maritalStatus = 8;
+  string phoneNumber = 9;
+  string email = 10;
+  NameDisplayType nameDisplayType = 11;
+  google.protobuf.Timestamp createdAt = 12;
+}
+
+message AccountAvatar {
+  string id = 1;
+  string avatarUrl = 2;
+  bool isInUse = 3;
+  bool isDeleted = 4;
+  bool isUsingDefault = 5;
+  google.protobuf.Timestamp createdAt = 6;
+}
+
+enum AccountCreatedByMethod {
+  ACCOUNT_CREATED_BY_GOOGLE = 0;
+  ACCOUNT_CREATED_BY_NORMAL = 1;
+}
+
+enum Gender {
+  MALE = 0;
+  FEMALE = 1;
+  OTHER = 2;
+}
+
+enum MaritalStatus {
+  SINGLE = 0;
+  IN_A_RELATIONSHIP = 1;
+  ENGAGED = 2;
+  MARRIED = 3;
+  IN_A_CIVIL_UNION = 4;
+  IN_A_DOMESTIC_PARTNERSHIP = 5;
+  IN_AN_OPEN_RELATIONSHIP = 6;
+  ITS_COMPLICATED = 7;
+  SEPARATED = 8;
+  DIVORCED = 9;
+  WIDOWED = 10;
+}
+
+enum NameDisplayType {
+  FIRST_NAME_FIRST = 0;
+  LAST_NAME_FIRST = 1;
+}

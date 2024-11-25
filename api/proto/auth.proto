@@ -1,0 +1,69 @@
+syntax = "proto3";
+package auth;
+
+option go_package ="./authpb";
+import "google/protobuf/timestamp.proto";
+
+
+service AuthService {
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Signup (SignupRequest) returns (SignUpResponse);
+  rpc CheckExistingUsername (CheckExistingUsernameRequest) returns (CheckExistingUsernameResponse);
+  rpc CheckExistingEmail (CheckExistingEmailRequest) returns (CheckExistingEmailResponse);
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string accessToken = 1;
+  string refreshToken = 2;
+  JWTClaims claims = 3;
+  string error = 4;
+  string errorCode = 5;
+}
+
+message SignupRequest {
+  string firstName = 1;
+  string lastName = 2;
+  google.protobuf.Timestamp birthday = 3;
+  string gender = 4;
+  string email = 5;
+  string password = 6;
+  string username = 7;
+  string phoneNumber = 8;
+  bytes avatar = 9;
+}
+
+message SignUpResponse {
+  string error = 1;
+  string errorCode = 2;
+}
+
+message JWTClaims {
+  uint64 accountId = 1;
+  repeated string permissions = 2;
+  uint64 roleId = 3;
+  string issuer = 4;
+  string subject = 5;
+  string audience = 6;
+  google.protobuf.Timestamp expiresAt = 7;
+}
+
+message CheckExistingUsernameRequest {
+  string username = 1;
+}
+
+message CheckExistingUsernameResponse {
+  bool isExisting = 1;
+}
+
+message CheckExistingEmailRequest {
+  string email = 1;
+}
+
+message CheckExistingEmailResponse{
+  bool isExisting = 1;
+}

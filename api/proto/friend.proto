@@ -1,0 +1,90 @@
+syntax = "proto3";
+package friend;
+
+option go_package = "./friendpb";
+service FriendService {
+  rpc GetAccountListFriend (GetFriendListRequest) returns (GetFriendListResponse);
+  rpc SendFriendList (SendFriendListRequest) returns (SendFriendListResponse);
+  rpc ResolveFriendRequestAction (FriendRequestActionRequest) returns (FriendRequestActionResponse);
+  rpc RecallFriendRequest (FriendRequestRecallRequest) returns (FriendRequestRecallResponse);
+  rpc FollowFriend (FriendFollowRequest) returns (FriendFollowResponse);
+  rpc BlockFriend (FriendBlockRequest) returns (FriendBlockResponse);
+}
+
+message BasicFriendData {
+  string accountId = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string nameDisplayType = 4;
+  string avatarURL = 5;
+}
+
+enum NameDisplayType {
+  FIRST_NAME_FIRST = 0;
+  LAST_NAME_FIRST = 1;
+}
+
+message GetFriendListRequest {
+  string accountId = 1;
+}
+
+message GetFriendListResponse {
+  repeated BasicFriendData friends = 1;
+  string error = 2;
+  string errorCode = 3;
+}
+
+message SendFriendListRequest {
+  string firstAccountId = 1;
+  string secondAccountId = 2;
+}
+
+message SendFriendListResponse {
+  string error = 1;
+  string errorCode = 2;
+}
+
+message FriendRequestActionRequest {
+  string receiverId = 1;
+  string requestId = 2;
+  string action = 3;
+}
+
+message FriendRequestActionResponse {
+  string error = 1;
+  string errorCode = 2;
+}
+
+message FriendRequestRecallRequest {
+  string senderId = 1;
+  string requestId = 2;
+}
+
+message FriendRequestRecallResponse {
+  string error = 1;
+  string errorCode = 2;
+}
+
+message FriendFollowRequest {
+  string fromAccountId = 1;
+  string toAccountId = 2;
+  string action = 3;
+}
+
+message FriendFollowResponse {
+  string error = 1;
+  string errorCode = 2;
+}
+
+message FriendBlockRequest {
+  string firstAccountId = 1;
+  string secondAccountId = 2;
+  string action = 3;
+}
+
+message FriendBlockResponse {
+  string error = 1;
+  string errorCode = 2;
+}
+
+
